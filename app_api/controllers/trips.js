@@ -3,22 +3,43 @@ require('../models/travlr');
 
 const Trip = mongoose.model('trips');
 
+// GET: /trips, lists all trips
 const tripsList = async (req, res) => {
-    try {
-        const trips = await Trip.find({}).exec();
 
-        res
-            .status(200)
-            .json(trips);
+    const q = await Trip
+        .find({})
+        .exec();
 
-    } catch (err) {
-
-        res
+    if (!q) {
+        return res
             .status(404)
             .json(err);
+    } else {
+        return res
+            .status(200)
+            .json(q);
+    }
+};
+
+// GET: /trips/:tripCode, lists a single trip
+const tripsFindByCode = async (req, res) => {
+
+    const q = await Trip
+        .find({ 'code': req.params.tripCode })
+        .exec();
+
+    if (!q) {
+        return res
+            .status(404)
+            .json(err);
+    } else {
+        return res
+            .status(200)
+            .json(q);
     }
 };
 
 module.exports = {
-    tripsList
+    tripsList,
+    tripsFindByCode
 };

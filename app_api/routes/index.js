@@ -1,8 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const ctrlTrips = require('../controllers/trips');
+const tripsController = require('../controllers/trips');
 
-router.get('/trips', ctrlTrips.tripsList);
+// GET all trips
+router
+    .route('/trips')
+    .get(tripsController.tripsList);
+
+// GET single trip by code
+router
+    .route('/trips/:tripCode')
+    .get(tripsController.tripsFindByCode);
 
 module.exports = router;

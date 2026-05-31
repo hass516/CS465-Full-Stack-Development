@@ -17,13 +17,15 @@
 							<h1>Travel</h1>
 							<ul id="sites">
             {{#each trips}}
-                                <li>
-                                    <a href="/travel"><img src="images/{{this.image}}" alt="Img"></a>
-                                    <h2><a href="/travel">{{this.name}}</a></h2>
-                                    <p>{{this.description}}</p>
-                                    <p><strong>Location:</strong> {{this.location}}</p>
-                                </li>
-            {{/each}}
+								<li>
+    								<a href="/api/trips/{{this.code}}">
+        							<img src="images/{{this.image}}" alt="Img">
+    								</a>
+									<h2><a href="/travel">{{this.name}}</a></h2>
+									<p>{{this.description}}</p>
+									<p><strong>Resort:</strong> {{this.resort}}</p>
+								</li>
+			{{/each}}
 							</ul>
 						</div>
 					</div>
