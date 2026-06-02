@@ -28,6 +28,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Enable CORS for API routes
+// Enable CORS
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Cache-Control', 'no-store');
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
