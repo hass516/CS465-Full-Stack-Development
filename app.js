@@ -4,14 +4,21 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('hbs');
+var passport = require('passport');
+
+// Load JWT secret and other environment variables used for authentication
+require('dotenv').config();
+
+// Bring in the database and register Mongoose models
+require('./app_api/models/db');
+
+// Bring in Passport configuration after models are registered
+require('./app_api/config/passport');
 
 // Define routers
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var apiRouter = require('./app_api/routes/index');
-
-// Bring in the database 
-require('./app_api/models/db');
 
 var app = express();
 
@@ -27,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 // Enable CORS for API routes
 // Enable CORS
@@ -34,7 +42,7 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
   res.header(
     'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Cache-Control', 'no-store');
